@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Summarization Demo</title>
+</head>
+<body>
+    <h1>Text Summarization</h1>
+    <form method="POST">
+        <textarea name="text" rows="10" cols="80" placeholder="Nhập văn bản ở đây...">{{ request.form['text'] if request.form.get('text') else '' }}</textarea><br>
+        <input style="color: aquamarine;" type="submit" value="Tóm tắt">
+    </form>
+    {% if summary %}
+    <h2>Kết quả tóm tắt:</h2>
+    <p>{{ summary }}</p>
+    {% endif %}
+</body>
+</html>
