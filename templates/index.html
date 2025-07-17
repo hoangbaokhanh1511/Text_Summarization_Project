@@ -1,62 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Smart Text Summarizer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
+      <div class="header">
+        <div>
             <h2>Text Summarizer</h2>
-            <div class="slider-container">
-                <label for="summaryLength">Summary Length:</label>
-                <input type="range" id="summaryLength" name="summary_length" min="30" max="200" value="60"
-                       oninput="lengthValue.innerText = this.value + ' tokens'">
-                <span id="lengthValue">60 tokens</span>
-            </div>
         </div>
+        
+        <div>
+          <label for="summary_length"><strong>Summary Length:</strong></label>
+          <span>Short</span>
+          <input
+            type="range"
+            id="summary_length"
+            name="summary_length"
+            min="1"
+            max="4"
+            step="1"
+            list="tickmarks"
+          />
 
-        <form method="POST">
-            <div class="editor">
-                <div class="input-box">
-                    <label><strong>Input text </strong></label>
-                    <textarea name="text" id="textInput" placeholder="Paste or type text...">{{ request.form['text'] if request.form.get('text') else '' }}</textarea>
-                    <div class="actions">
-                        <button type="button" onclick="pasteText()">📋 Paste Text</button>
-                        <button type="submit">🔍 Summarize</button>
-                    </div>
-                    <div class="stats">
-                        <span id="wordCount">0 words</span> • <span id="sentenceCount">0 sentences</span>
-                    </div>
-                </div>
+          <datalist id="tickmarks">
+            <option value="1"></option>
+            <option value="2"></option>
+            <option value="3"></option>
+            <option value="4"></option>
+          </datalist>
+          <span>Long</span>
+        </div>
+      </div>
 
-                <div class="output-box">
-                    <label><strong>Summary Output</strong></label>
-                    <div id="summaryBox">{{ summary }}</div>
-                </div>
+      <form method="POST">
+        <div class="editor">
+          <div class="input-box">
+            <label><strong>Input text </strong></label>
+            <textarea
+              name="text"
+              id="textInput"
+              placeholder="Paste or type text..."
+            >
+{{ request.form['text'] if request.form.get('text') else '' }}</textarea
+            >
+            <div class="actions">
+              <button type="button" onclick="pasteText()">📋 Paste Text</button>
+              <button type="submit">🔍 Summarize</button>
             </div>
-        </form>
+            <div class="stats">
+              <span id="wordCount">0 words</span> •
+              <span id="sentenceCount">0 sentences</span>
+            </div>
+          </div>
+
+          <div class="output-box">
+            <label><strong>Summary Output</strong></label>
+            <div id="summaryBox">{{ summary }}</div>
+          </div>
+        </div>
+      </form>
     </div>
 
-<script>
-function pasteText() {
-    navigator.clipboard.readText().then(clipText => {
-        document.getElementById('textInput').value = clipText;
-        updateCounts();
-    });
-}
+    <script>
+      function pasteText() {
+        navigator.clipboard.readText().then((clipText) => {
+          document.getElementById("textInput").value = clipText;
+          updateCounts();
+        });
+      }
 
-function updateCounts() {
-    const text = document.getElementById('textInput').value;
-    const words = text.trim().split(/\s+/).filter(w => w).length;
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-    document.getElementById('wordCount').innerText = `${words} words`;
-    document.getElementById('sentenceCount').innerText = `${sentences} sentences`;
-}
+      function updateCounts() {
+        const text = document.getElementById("textInput").value;
+        const words = text
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length;
+        const sentences = text
+          .split(/[.!?]+/)
+          .filter((s) => s.trim().length > 0).length;
+        document.getElementById("wordCount").innerText = `${words} words`;
+        document.getElementById(
+          "sentenceCount"
+        ).innerText = `${sentences} sentences`;
+      }
 
-document.getElementById('textInput').addEventListener('input', updateCounts);
-window.onload = updateCounts;
-</script>
-</body>
+      document
+        .getElementById("textInput")
+        .addEventListener("input", updateCounts);
+      window.onload = updateCounts;
+    </script>
+  </body>
 </html>
