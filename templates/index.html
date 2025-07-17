@@ -20,7 +20,8 @@
         <form method="POST">
             <div class="editor">
                 <div class="input-box">
-                    <textarea name="text" id="textInput" placeholder="Paste or type text...">{{ input_text }}</textarea>
+                    <label><strong>Input text </strong></label>
+                    <textarea name="text" id="textInput" placeholder="Paste or type text...">{{ request.form['text'] if request.form.get('text') else '' }}</textarea>
                     <div class="actions">
                         <button type="button" onclick="pasteText()">📋 Paste Text</button>
                         <button type="submit">🔍 Summarize</button>
