@@ -14,30 +14,7 @@
         <div>
             <h2>Text Summarizer</h2>
         </div>
-        
-        <div>
-          <label for="summary_length"><strong>Summary Length:</strong></label>
-          <span>Short</span>
-          <input
-            type="range"
-            id="summary_length"
-            name="summary_length"
-            min="1"
-            max="4"
-            step="1"
-            list="tickmarks"
-          />
-
-          <datalist id="tickmarks">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-          </datalist>
-          <span>Long</span>
-        </div>
-      </div>
-
+    </div>
       <form method="POST">
         <div class="editor">
           <div class="input-box">
@@ -62,6 +39,10 @@
           <div class="output-box">
             <label><strong>Summary Output</strong></label>
             <div id="summaryBox">{{ summary }}</div>
+            <div class="stats">
+                <span id="summaryWordCount">0 words</span> •
+                <span id="summarySentenceCount">0 sentences</span>
+            </div>
           </div>
         </div>
       </form>
@@ -89,11 +70,30 @@
           "sentenceCount"
         ).innerText = `${sentences} sentences`;
       }
-
+      function updateSummaryCounts() {
+        const summary = document.getElementById("summaryBox").innerText;
+        const words = summary
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length;
+        const sentences = summary
+          .split(/[.!?]+/)
+          .filter((s) => s.trim().length > 0).length;
+        document.getElementById("summaryWordCount").innerText = `${words} words`;
+        document.getElementById(
+          "summarySentenceCount"
+        ).innerText = `${sentences} sentences`;
+      }
       document
         .getElementById("textInput")
         .addEventListener("input", updateCounts);
       window.onload = updateCounts;
+      window.onload = function () {
+        updateCounts();           // cập nhật input
+        updateSummaryCounts();    // cập nhật output
+      };
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>
   </body>
 </html>
