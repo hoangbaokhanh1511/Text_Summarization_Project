@@ -22,10 +22,7 @@
             <textarea
               name="text"
               id="textInput"
-              placeholder="Paste or type text..."
-            >
-{{ request.form['text'] if request.form.get('text') else '' }}</textarea
-            >
+              placeholder="Paste or type text...">{{ request.form['text'] if request.form.get('text') else '' }}</textarea>
             <div class="actions">
               <button type="button" onclick="pasteText()">📋 Paste Text</button>
               <button type="submit">🔍 Summarize</button>
@@ -39,10 +36,39 @@
           <div class="output-box">
             <label><strong>Summary Output</strong></label>
             <div id="summaryBox">{{ summary }}</div>
+            <div class="actions">
+              <button type="button" onclick="toggleSummaryPopup()">📋 Static</button>
+            </div>
             <div class="stats">
                 <span id="summaryWordCount">0 words</span> •
                 <span id="summarySentenceCount">0 sentences</span>
             </div>
+
+            <div id="popupOverlay" class="popup-overlay" onclick="closeSummaryPopup()"></div>
+
+            <div id="summaryPopup" class="popup">
+
+            <span class="close-btn" onclick="closeSummaryPopup()">&times;</span>
+            <h3>📈 Thống kê Summary</h3>
+            <div class="popup-content">
+              <div class="stat-row">
+                <div class="label">Word Count</div>
+                <div class="value"><span id="wordCountFrom">0</span> → <span id="wordCountTo">0</span></div>
+              </div>
+              <div class="stat-row">
+                <div class="label">Sentence Count</div>
+                <div class="value"><span id="sentenceCountFrom">0</span> → <span id="sentenceCountTo">0</span></div>
+              </div>
+              <div class="stat-row">
+                <div class="label">Characters</div>
+                <div class="value"><span id="charCountFrom">0</span> → <span id="charCountTo">0</span></div>
+              </div>
+              <div class="stat-row">
+                <div class="label">Reduction</div>
+                <div class="value"><span id="reductionPercent">0%</span></div>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </form>
@@ -84,6 +110,45 @@
           "summarySentenceCount"
         ).innerText = `${sentences} sentences`;
       }
+
+      function toggleSummaryPopup() {
+        updateSummaryStatistics();
+        document.getElementById("popupOverlay").style.display = "block";
+        document.getElementById("summaryPopup").style.display = "block";
+      }
+
+      function closeSummaryPopup() {
+        document.getElementById("popupOverlay").style.display = "none";
+        document.getElementById("summaryPopup").style.display = "none";
+      }
+
+      function updateSummaryStatistics() {
+        const originalText = document.getElementById("textInput").value || "";
+        const summaryText = document.getElementById("summaryBox").innerText || "";
+
+        const wordFrom = originalText.trim().split(/\s+/).filter(w => w).length;
+        const wordTo = summaryText.trim().split(/\s+/).filter(w => w).length;
+
+        const sentenceFrom = originalText.split(/[.!?]+/).filter(s => s.trim()).length;
+        const sentenceTo = summaryText.split(/[.!?]+/).filter(s => s.trim()).length;
+
+        const charFrom = originalText.length;
+        const charTo = summaryText.length;
+
+        const reduction = wordFrom > 0 ? Math.round(100 * (1 - wordTo / wordFrom)) : 0;
+
+        document.getElementById("wordCountFrom").innerText = wordFrom;
+        document.getElementById("wordCountTo").innerText = wordTo;
+
+        document.getElementById("sentenceCountFrom").innerText = sentenceFrom;
+        document.getElementById("sentenceCountTo").innerText = sentenceTo;
+
+        document.getElementById("charCountFrom").innerText = charFrom;
+        document.getElementById("charCountTo").innerText = charTo;
+
+        document.getElementById("reductionPercent").innerText = `${reduction}%`;
+      }
+
       document
         .getElementById("textInput")
         .addEventListener("input", updateCounts);

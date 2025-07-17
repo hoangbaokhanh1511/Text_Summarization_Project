@@ -39,6 +39,7 @@ textarea {
     height: 265px;
     resize: vertical;
     font-size: 15px;
+    border-radius: 7px;
 }
 
 .actions {
@@ -63,7 +64,7 @@ textarea {
 #summaryBox {
     white-space: pre-wrap;
     padding: 10px;
-    margin-bottom: 52px;
+    /* margin-bottom: 52px; */
     border: 1px solid #ccc;
     border-radius: 6px;
     background: #f9f9f9;
@@ -78,4 +79,60 @@ textarea {
 label {
     color: #1c6b48;
     font-size: 25px;
+}
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+  width: 300px;
+}
+
+.popup h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.close-btn {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.popup-content .stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.popup-content .stat-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: bold;
+  color: #333;
+}
+
+.value {
+  font-weight: bold;
+  color: #007e33;
 }
