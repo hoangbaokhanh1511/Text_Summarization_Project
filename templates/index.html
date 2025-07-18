@@ -15,7 +15,7 @@
             <h2>Text Summarizer</h2>
         </div>
     </div>
-      <form method="POST">
+      
         <div class="editor">
           <div class="input-box">
             <label><strong>Input text </strong></label>
@@ -25,7 +25,7 @@
               placeholder="Paste or type text...">{{ request.form['text'] if request.form.get('text') else '' }}</textarea>
             <div class="actions">
               <button type="button" onclick="pasteText()">📋 Paste Text</button>
-              <button type="submit">🔍 Summarize</button>
+              <button type="button" id="SummarizeBtn">🔍 Summarize</button>
             </div>
             <div class="stats">
               <span id="wordCount">0 words</span> •
@@ -71,7 +71,6 @@
           </div>
           </div>
         </div>
-      </form>
     </div>
 
     <script>
@@ -148,7 +147,27 @@
 
         document.getElementById("reductionPercent").innerText = `${reduction}%`;
       }
+      async function summarizeText() {
+        const inputText = document.getElementById("textInput").value;
+        // Gửi dữ liệu đến Flask server bằng fetch API
+        console.log("Input text:", inputText);
+        const response = await fetch("summarize", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: inputText }),
+        });
+        // Nhận phản hồi và cập nhật giao diện
+        const data = await response.json();
+        console.log(data);
+        const summary = data.summary;
 
+        document.getElementById("summaryBox").innerText = summary;
+        updateSummaryCounts();
+        updateSummaryStatistics();
+      }
+      document.getElementById("SummarizeBtn").addEventListener("click", summarizeText);
       document
         .getElementById("textInput")
         .addEventListener("input", updateCounts);
