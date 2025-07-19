@@ -10,7 +10,7 @@
 ### b. Phương pháp tiền huấn luyện GSG:
 Pegasus đưa vào mục tiêu tự giám sát đặc biệt mang tên là **Gap Sentence Generation (GSG)**. Trong GSG, một hoặc nhiều câu trọng yếu được che(bằng **token [MASK1]**) và mô hình được **huấn luyện sinh lại toàn bộ các câu bị ẩn từ phần còn lại của tài liệu**. Trong đó:
 - **Chiến lược chọn câu quan trọng:** Không phải mọi câu đều được che. Trong quá trình tiền huấn luyện GSG, Pegasus cần chọn một tập các câu bị che để mô hình học cách sinh lại như tóm tắt. Các tác giả đã thử nghiệm sáu chiến lược khác nhau (Lead, Random, Ind-Orig, v.v.) và kết luận rằng chiến lược Ind-Orig — chọn các câu có độ salience cao nhất — cho kết quả tốt nhất trên cả bốn tập dữ liệu downstream. Điều này khẳng định rằng chọn các câu thực sự quan trọng về mặt thông tin sẽ giúp mô hình học tốt hơn nhiệm vụ tóm tắt, so với chỉ chọn câu đầu hoặc chọn ngẫu nhiên. Do đó, phiên bản PEGASUS chính thức sử dụng chiến lược Ind-Orig làm mặc định cho pretraining
-![alt text](image-1.png)
+![alt text](Pegasus_Architecture.png)
 Mô hình Pegasus không chỉ đơn thuần học sinh câu bị che, mà nó **che hẳn các câu đầy đủ** có tính "tóm tắt", rồi yêu cầu mô hình học cách sinh lại chúng - giống như học tóm tắt đoạn văn thành bản tóm tắt súc tích. Ở ví dụ này:
 - Với input đầu vào: "Pegasus is mythical. It is pure white. It names the model.". **Pegasus** sẽ chọn một hoặc nhiều câu có nội dung chính (salient) để "ẩn đi" - trong ví dụ này là **"mythical"**, **"names"** và câu **"It is pure white"** Nội dung các câu sẽ được thay bằng các token đặc biệt [MASK1], [MASK2]. 
 - Encoder Input (nội dung còn lại với MASK): "Pegasus is [MASK2]. [MASK1] It [MASK2] the model". Đây là những gì được đưa vào **Transformer Encoder**. Mô hình sẽ cố gắng "hiểu" phần còn lại của văn bản. 
@@ -20,7 +20,7 @@ Tóm lại, cơ chế GSG trong Pegasus là xóa đi những câu quan trọng n
 ### c. Dữ liệu tiền huấn luyện: 
 Pegasus được tiền huấn luyện trên các kho dữ liệu văn bản quy mô rất lớn, chủ yếu là dữ liệu web và tin tức. Cụ thể, tác giả sử dụng **C4 (Colossal Clean Craw)** - một tập dữ liệu từ Common Crawl gồm 350 triệu trang web (~750GB văn bản) và **HugeNews** - một tập tổng hợp 1.5 tỷ bài báo  (khoảng 3.8 TB dữ liệu) từ các trang tin tức chất lượng cao (2013-2019). Thống kê kết quả cho thấy tiền huấn luyện trên HugeNews giúp Pegasus đạt hiệu năng tốt hơn trên các bộ dữ liệu tin tức (như XSum, CNN/DM) so với tiền huấn luyện chỉ trên C4, trong khi C4 mạnh hơn với các tập non-news (WikiHow, Reddit TIFU). Điều này phản ánh rằng Pegasus được hưởng lợi khi dữ liệu tiền huấn luyện cùng miền (tin tức) với nhiệm vụ tinh chỉnh, nhờ đó bắt kịp cấu trúc đặc thù của báo chí.
 
-[!CAUTION]
+>[!CAUTION]
 - Nguồn bài báo "PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization": https://ar5iv.labs.arxiv.org/html/1912.08777#:~:text=corpora%20with%20a%20new%20self,our%20model%20summaries%20achieve%20human
 - Mô hình Pegasus: https://huggingface.co/docs/transformers/model_doc/pegasus
 
