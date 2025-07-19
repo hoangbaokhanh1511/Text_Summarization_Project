@@ -4,7 +4,8 @@
 ### a. Tổng quan về mô hình Pegasus:
 - Mô hình **Pegasus** là một mô hình Transformer encoder - decoder được Google phát triển chuyên cho bài toán tóm tắt ngữ nghĩa (text summarization). Cấu trúc cơ bản của nó tương tự như kiến trúc Transformer chuẩn, gồm bộ mã hóa (encoder) và bộ giải mã (decoder). Mỗi lớp encoder/decoder Pegasus bao gồm cơ chế **multi-head self-attention** và **feed-forward** giống như Transformer gốc. Pegasus sử dụng **mã hóa vị trí sinusoidai (positional encoding sinusodial)** như trong Transformer gốc. Các thông số chính của Pegasus base là Chiều không gian embedding d = 1024, chiều mạng nơ-ron ẩn FNN = 4096, số heads attention = 16 và mỗi phần encoder/decoder có 16 lớp. 
 
-> [!CAUTION] Nếu chưa nắm được kiến trúc của mô hình Transformer thì có thể đến trang blog này để đọc và nghiên cứu trước: https://pbcquoc.github.io/transformer/
+> [!CAUTION] 
+- Nếu chưa nắm được kiến trúc của mô hình Transformer thì có thể đến trang blog này để đọc và nghiên cứu trước: https://pbcquoc.github.io/transformer/
 
 ### b. Phương pháp tiền huấn luyện GSG:
 Pegasus đưa vào mục tiêu tự giám sát đặc biệt mang tên là **Gap Sentence Generation (GSG)**. Trong GSG, một hoặc nhiều câu trọng yếu được che(bằng **token [MASK1]**) và mô hình được **huấn luyện sinh lại toàn bộ các câu bị ẩn từ phần còn lại của tài liệu**. Trong đó:
@@ -19,7 +20,7 @@ Tóm lại, cơ chế GSG trong Pegasus là xóa đi những câu quan trọng n
 ### c. Dữ liệu tiền huấn luyện: 
 Pegasus được tiền huấn luyện trên các kho dữ liệu văn bản quy mô rất lớn, chủ yếu là dữ liệu web và tin tức. Cụ thể, tác giả sử dụng **C4 (Colossal Clean Craw)** - một tập dữ liệu từ Common Crawl gồm 350 triệu trang web (~750GB văn bản) và **HugeNews** - một tập tổng hợp 1.5 tỷ bài báo  (khoảng 3.8 TB dữ liệu) từ các trang tin tức chất lượng cao (2013-2019). Thống kê kết quả cho thấy tiền huấn luyện trên HugeNews giúp Pegasus đạt hiệu năng tốt hơn trên các bộ dữ liệu tin tức (như XSum, CNN/DM) so với tiền huấn luyện chỉ trên C4, trong khi C4 mạnh hơn với các tập non-news (WikiHow, Reddit TIFU). Điều này phản ánh rằng Pegasus được hưởng lợi khi dữ liệu tiền huấn luyện cùng miền (tin tức) với nhiệm vụ tinh chỉnh, nhờ đó bắt kịp cấu trúc đặc thù của báo chí.
 
->[!CAUTION]
+> [!CAUTION]
 - Nguồn bài báo "PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization": https://ar5iv.labs.arxiv.org/html/1912.08777#:~:text=corpora%20with%20a%20new%20self,our%20model%20summaries%20achieve%20human
 - Mô hình Pegasus: https://huggingface.co/docs/transformers/model_doc/pegasus
 
