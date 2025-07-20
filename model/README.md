@@ -1,8 +1,9 @@
-# Mô hình **PEGASUS**, **T5**, **BART**
-
-## 1. Mô hình Pegasus
+# Mô hình **PEGASUS**, **BART**
+## 1. Mô tả dữ liệu CNN/DailyMail
+Giới thiệu **tập dữ liệu CNN\DailyMail**: Đây là tập dữ lệu tóm tắt tin tức phổ biến gồm 93.000 bài báo của CNN và 220.000 bài của DailyMail, mỗi bài đi kèm với các gạch đầu dòng được biên tập sẵn. **CNN/DailyMail** có điểm điểm bài báo nhiều đoạn ngắn, mỗi đoạn có thể chứa thông tin quan trọng, nên là bài toán điển hình để đánh giá khả năng tóm tắt. 
+## 2. Mô hình Pegasus
 ### a. Tổng quan về mô hình Pegasus:
-- Mô hình **Pegasus** là một mô hình Transformer encoder - decoder được Google phát triển chuyên cho bài toán tóm tắt ngữ nghĩa (text summarization). Cấu trúc cơ bản của nó tương tự như kiến trúc Transformer chuẩn, gồm bộ mã hóa (encoder) và bộ giải mã (decoder). Mỗi lớp encoder/decoder Pegasus bao gồm cơ chế **multi-head self-attention** và **feed-forward** giống như Transformer gốc. Pegasus sử dụng **mã hóa vị trí sinusoidai (positional encoding sinusodial)** như trong Transformer gốc. Các thông số chính của Pegasus base là Chiều không gian embedding d = 1024, chiều mạng nơ-ron ẩn FNN = 4096, số heads attention = 16 và mỗi phần encoder/decoder có 16 lớp. 
+Mô hình **Pegasus** là một mô hình Transformer encoder - decoder (seq2seq) được Google phát triển chuyên cho bài toán tóm tắt ngữ nghĩa (text summarization). Cấu trúc cơ bản của nó tương tự như kiến trúc Transformer chuẩn, gồm bộ mã hóa (encoder) và bộ giải mã (decoder). Mỗi lớp encoder/decoder Pegasus bao gồm cơ chế **multi-head self-attention** và **feed-forward** giống như Transformer gốc. Pegasus sử dụng **mã hóa vị trí sinusoidai (positional encoding sinusodial)** như trong Transformer gốc. Các thông số chính của Pegasus base là Chiều không gian embedding d = 1024, chiều mạng nơ-ron ẩn FNN = 4096, số heads attention = 16 và mỗi phần encoder/decoder có 16 lớp. 
 
 > [!CAUTION] 
 - Nếu chưa nắm được kiến trúc của mô hình Transformer thì có thể đến trang blog này để đọc và nghiên cứu trước: https://pbcquoc.github.io/transformer/
@@ -25,6 +26,6 @@ Pegasus được tiền huấn luyện trên các kho dữ liệu văn bản quy
 - Nguồn bài báo "PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization": https://ar5iv.labs.arxiv.org/html/1912.08777#:~:text=corpora%20with%20a%20new%20self,our%20model%20summaries%20achieve%20human
 - Mô hình Pegasus: https://huggingface.co/docs/transformers/model_doc/pegasus
 
-### d. Mô hình Pegasus fine-tuned trên CNN/DailyMail
-- Giới thiệu **tập dữ liệu CNN\DailyMail**: Đây là tập dữ lệu tóm tắt tin tức phổ biến gồm 93.000 bài báo của CNN và 220.000 bài của DailyMail, mỗi bài đi kèm với các gạch đầu dòng được biên tập sẵn. **CNN/DailyMail** có điểm điểm bài báo nhiều đoạn ngắn, mỗi đoạn có thể chứa thông tin quan trọng, nên là bài toán điển hình để đánh giá khả năng tóm tắt. 
-- Kết quả trên CNN/DailyMail: Pegasus đạt các chỉ số ROUGE rất cao trên CNN/DailyMail so với các phương pháp trước đó. Trên CNN/DM, PegasusLarge tiền huấn luyện trên HugeNews đạt khoảng ROUGE-1 ≈ 43.08, ROUGE-2 ≈ 21.67, ROUGE-L ≈ 31.27
+## 3. Mô hình BART
+### a. Tổng quan về mô hình BART
+Mô hình **BART (Bidirectional and Auto-Regressive Transformer)** là một mô hình seq2seq được đề xuất bởi Facebook AI (Meta AI) năm 2019. Mục tiêu của BART là kết hợp sức mạnh của encoder hai chiều của BERT (giúp hiểu ngữ cảnh) với decoder tự hồi quy (giúp sinh văn bản). Mô hình này được huấn luyện dạng **"denoising autoencoder"**: đầu vào là **đoạn văn bản bị làm nhiễu (corrupted) bằng nhiều phép biến đổi** và mô hình học **cách tái tạo lại văn bản gốc từ đó**. Nhờ vậy, BART vừa nắm vững ngữ cảnh (bidirectional encoder) như **BERT**, vừa có khả năng sinh ngôn ngữ (autogressive decoder) như **GPT**.   
