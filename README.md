@@ -8,7 +8,7 @@ Text summarization is a classic and challenging problem in Natrual Language Mode
 - **Abstractive Summarixation (used in this project):** Generating new sentences that convey the essence of the source 
 
 ## 🚀 Model Selection and Evaluation
-Before deciding on the final model, i conducted a comparative evaluation of three powerful transformer-based summarization models: **Pegasus**, **Bart** and **T5**. 
+Before deciding on the final model, i conducted a comparative evaluation of three powerful transformer-based summarization models: **Pegasus**, **Bart**. 
 
 All models were evaluated using the **CNN/DailyMail dataset** and scored based on **ROUGE** metrics to measure summarization quality. After thorough analysis, **Pegasus** was selected for its superior performance in capturing the semantics of long-form news articles and generating highly fluent summaries. 
 
