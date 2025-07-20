@@ -23,8 +23,8 @@ Tóm lại, cơ chế GSG trong Pegasus là xóa đi những câu quan trọng n
 Pegasus được tiền huấn luyện trên các kho dữ liệu văn bản quy mô rất lớn, chủ yếu là dữ liệu web và tin tức. Cụ thể, tác giả sử dụng **C4 (Colossal Clean Craw)** - một tập dữ liệu từ Common Crawl gồm 350 triệu trang web (~750GB văn bản) và **HugeNews** - một tập tổng hợp 1.5 tỷ bài báo  (khoảng 3.8 TB dữ liệu) từ các trang tin tức chất lượng cao (2013-2019). Thống kê kết quả cho thấy tiền huấn luyện trên HugeNews giúp Pegasus đạt hiệu năng tốt hơn trên các bộ dữ liệu tin tức (như XSum, CNN/DM) so với tiền huấn luyện chỉ trên C4, trong khi C4 mạnh hơn với các tập non-news (WikiHow, Reddit TIFU). Điều này phản ánh rằng Pegasus được hưởng lợi khi dữ liệu tiền huấn luyện cùng miền (tin tức) với nhiệm vụ tinh chỉnh, nhờ đó bắt kịp cấu trúc đặc thù của báo chí.
 
 > [!CAUTION]
-- Nguồn bài báo "PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization": https://ar5iv.labs.arxiv.org/html/1912.08777#:~:text=corpora%20with%20a%20new%20self,our%20model%20summaries%20achieve%20human
-- Mô hình Pegasus: https://huggingface.co/docs/transformers/model_doc/pegasus
+> - Nguồn bài báo "PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization": https://ar5iv.labs.arxiv.org/html/1912.08777#:~:text=corpora%20with%20a%20new%20self,our%20model%20summaries%20achieve%20human
+> - Mô hình Pegasus: https://huggingface.co/docs/transformers/model_doc/pegasus
 
 ## 3. Mô hình BART
 ### a. Tổng quan về mô hình BART
