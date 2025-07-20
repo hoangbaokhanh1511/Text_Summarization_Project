@@ -6,7 +6,7 @@ Giới thiệu **tập dữ liệu CNN\DailyMail**: Đây là tập dữ lệu t
 Mô hình **Pegasus** là một mô hình Transformer encoder - decoder (seq2seq) được Google phát triển chuyên cho bài toán tóm tắt ngữ nghĩa (text summarization). Cấu trúc cơ bản của nó tương tự như kiến trúc Transformer chuẩn, gồm bộ mã hóa (encoder) và bộ giải mã (decoder). Mỗi lớp encoder/decoder Pegasus bao gồm cơ chế **multi-head self-attention** và **feed-forward** giống như Transformer gốc. Pegasus sử dụng **mã hóa vị trí sinusoidai (positional encoding sinusodial)** như trong Transformer gốc. Các thông số chính của Pegasus base là Chiều không gian embedding d = 1024, chiều mạng nơ-ron ẩn FNN = 4096, số heads attention = 16 và mỗi phần encoder/decoder có 16 lớp. 
 
 > [!CAUTION] 
-- Nếu chưa nắm được kiến trúc của mô hình Transformer thì có thể đến trang blog này để đọc và nghiên cứu trước: https://pbcquoc.github.io/transformer/
+> - Nếu chưa nắm được kiến trúc của mô hình Transformer thì có thể đến trang blog này để đọc và nghiên cứu trước: https://pbcquoc.github.io/transformer/
 
 ### b. Phương pháp tiền huấn luyện GSG:
 Pegasus đưa vào mục tiêu tự giám sát đặc biệt mang tên là **Gap Sentence Generation (GSG)**. Trong GSG, một hoặc nhiều câu trọng yếu được che(bằng **token [MASK1]**) và mô hình được **huấn luyện sinh lại toàn bộ các câu bị ẩn từ phần còn lại của tài liệu**. Trong đó:
